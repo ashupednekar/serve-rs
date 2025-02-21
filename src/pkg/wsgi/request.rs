@@ -5,20 +5,12 @@ use hyper::{
 };
 use pyo3::{prelude::*, types::{PyBytes, PyDict}};
 
-#[pyfunction]
-fn start_response(){}
+use crate::pkg::wsgi::response::WsgiResponse;
+
+use super::WSGIApp;
 
 
-pub struct WSGIApp {
-    app: Arc<Py<PyAny>>,
-}
-
-impl WSGIApp {
-    pub fn new(py: Python, module: &str, app: &str) -> PyResult<Self> {
-        let module = py.import(module)?;
-        let app = Arc::new(module.getattr(app)?.into_pyobject(py)?.into());
-        Ok(Self { app })
-    }
+impl WSGIApp{
 
     pub async fn handle_request(&self, req: Request<Body>) -> PyResult<Response<Body>> {
         tracing::info!("req: {:?}", &req);
@@ -63,9 +55,9 @@ impl WSGIApp {
 
                 tracing::debug!("prepared environ: {:?}", environ);
 
-                let headers = PyDict::new(py);
-
-                let res = app.call1(py, (environ, start_response(), ))?;
+                let wsgi_response = Py::new(py, WsgiResponse::new())?;
+                let start_response = wsgi_response.getattr(py, "start_response")?;
+                let res = app.call1(py, (environ, start_response, ))?;
                 tracing::info!("called Python WSGI function");
 
                 let response_body: Vec<u8> = res.extract(py)?;

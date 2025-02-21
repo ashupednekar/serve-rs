@@ -13,7 +13,7 @@ classifiers = [
 dynamic = ["version"]
 
 [project.scripts]
-serve-rs = "servers:start"
+serve-rs = "servers:serve"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]

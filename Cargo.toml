@@ -1,0 +1,13 @@
+[package]
+name = "corn"
+version = "6.1.5"
+edition = "2021"
+
+[lib]
+name = "corn"
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+hyper = { version = "0.14.28", features = ["full", "server"] }
+pyo3 = { version = "0.23.4", features = ["extension-module", "auto-initialize"] }
+tokio = { version = "1.43.0", features = ["full"] }

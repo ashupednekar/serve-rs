@@ -19,10 +19,8 @@ impl WsgiResponse {
     }
 
     fn start_response(&self, status: String, headers: Vec<(String, String)>) {
-        // Store status and headers in a thread-safe way
         let mut status_lock = self.status.lock().unwrap();
         let mut headers_lock = self.headers.lock().unwrap();
-        
         *status_lock = Some(status);
         *headers_lock = headers;
     }

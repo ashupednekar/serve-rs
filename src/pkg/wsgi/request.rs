@@ -1,5 +1,4 @@
-use std::{collections::HashMap, sync::Arc};
-
+use std::collections::HashMap;
 use hyper::{
    Body, Request, Response 
 };
@@ -33,7 +32,7 @@ impl WSGIApp{
         let app = self.app.clone();
 
         let (status, response_headers, body) = tokio::task::spawn_blocking(move || {
-            Python::with_gil(|py| -> PyResult<(String, Vec<(String, String)>, Vec<u8>)> {
+            Python::with_gil(|py| -> PyResult<(u16, Vec<(String, String)>, Vec<u8>)> {
                 let environ = PyDict::new(py);
                 for (k, v) in headers.into_iter(){
                     environ.set_item(k.as_str().replace("-", "_").to_uppercase(), v.to_string())?;
@@ -60,17 +59,29 @@ impl WSGIApp{
                 let res = app.call1(py, (environ, start_response, ))?;
                 tracing::info!("called Python WSGI function");
 
-                let response_body: Vec<u8> = res.extract(py)?;
+                let status_code = wsgi_response
+                    .getattr(py, "get_status")?
+                    .call0(py)?
+                    .extract::<String>(py)?
+                    .split_whitespace()
+                    .next()
+                    .and_then(|s| s.parse::<u16>().ok())
+                    .unwrap_or_default();
+                tracing::info!("status code: {}", &status_code);
+
+                tracing::info!("res: {:?}", &res);
+                let response_body: String = res.extract(py)?;
+                tracing::info!("response: {:?}", response_body);
                 //let status_str: String = status_code.extract(py)?;
                 //let response_headers: Vec<(String, String)> = headers.extract(py)?;
-
-                Ok(("200".to_string(), vec![("".to_string(), "".to_string())], response_body))   
+                    //.parse::<u16>()?; 
+                Ok((status_code, vec![("".to_string(), "".to_string())], response_body.into()))   
             })
         }).await.map_err(|e| PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(e.to_string()))??;
 
         tracing::info!("{:?}| {:?} | {:?}", status, response_headers, body);
         
-        let mut builder = Response::builder().status(status.parse::<u16>().unwrap_or(500));
+        let mut builder = Response::builder().status(status);
         for (key, value) in response_headers {
             builder = builder.header(&key, &value);
         }

@@ -6,14 +6,16 @@ use pyo3::prelude::*;
 use tokio::runtime::Runtime;
 
 #[pyfunction]
-fn start() -> PyResult<()> {
-    tokio::task::block_in_place(move || {
-        let rt = Runtime::new().expect("failed");
-        rt.block_on(async {
-            serve().await.unwrap();     
+fn start(py: Python) -> PyResult<()> {
+    py.allow_threads(||{
+        tokio::task::block_in_place(move || {
+            let rt = Runtime::new().expect("failed");
+            rt.block_on(async {
+                serve().await.unwrap();     
+            });
         });
-    });
-    Ok(())
+        Ok(())
+    })
 }
 
 #[pymodule]

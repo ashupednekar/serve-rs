@@ -2,6 +2,7 @@ use hyper::{
     service::{make_service_fn, service_fn}, Server
 };
 use pyo3::prelude::*;
+use tokio::signal;
 use std::{convert::Infallible, net::SocketAddr, sync::Arc};
 
 use crate::pkg::wsgi::WSGIApp;
@@ -20,14 +21,18 @@ pub async fn serve() -> PyResult<()>{
         async { 
             Ok::<_, Infallible>(service_fn(move |req| {
                 let app = app.clone();
-                async move { app.handle_request(req).await }
+                async move {
+                    app.handle_request(req).await 
+                }
             }))
         }
     });
 
-    let server = Server::bind(&addr).serve(make_svc);
-    
     println!("WSGI Server running at http://{}", addr);
-    server.await.unwrap();
+    let server = Server::bind(&addr).serve(make_svc);
+    tokio::select! {
+        _ = server => {},
+        _ = signal::ctrl_c() => {}
+    }
     Ok(())
 }

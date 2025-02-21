@@ -27,13 +27,14 @@ impl WSGIApp {
             .iter()
             .map(|(k, v)| (k.as_str(), v.to_str().unwrap_or("")))
             .collect();*/
-
+        let path = req.uri().to_string();
         let body_bytes = hyper::body::to_bytes(req.into_body())
             .await
             .map_err(|e| PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(format!("{}", e)))?
             .to_vec();
 
         let app = self.app.clone();
+    
 
         let (status, response_headers, body) = tokio::task::spawn_blocking(move || {
             Python::with_gil(|py| -> PyResult<(String, Vec<(String, String)>, Vec<u8>)> {
@@ -42,10 +43,8 @@ impl WSGIApp {
                 environ.set_item("SERVER_NAME", "")?;
                 environ.set_item("SERVER_PORT", "")?;
                 environ.set_item("HTTP_HOST", "localhost")?;
-
+                environ.set_item("PATH_INFO", path)?;
                 environ.set_item("REQUEST_METHOD", "GET")?;
-
-
 
                 let py_body = PyBytes::new(py, &body_bytes);
 

@@ -70,12 +70,13 @@ impl WSGIApp{
                 tracing::info!("status code: {}", &status_code);
 
                 tracing::info!("res: {:?}", &res);
-                let response_body: String = res.extract(py)?;
-                tracing::info!("response: {:?}", response_body);
+                let response_bytes: Vec<u8> = res
+                    .getattr(py, "content")?
+                    .extract::<Vec<u8>>(py)?;
                 //let status_str: String = status_code.extract(py)?;
                 //let response_headers: Vec<(String, String)> = headers.extract(py)?;
                     //.parse::<u16>()?; 
-                Ok((status_code, vec![("".to_string(), "".to_string())], response_body.into()))   
+                Ok((status_code, vec![], response_bytes))   
             })
         }).await.map_err(|e| PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(e.to_string()))??;
 
@@ -83,7 +84,7 @@ impl WSGIApp{
         
         let mut builder = Response::builder().status(status);
         for (key, value) in response_headers {
-            builder = builder.header(&key, &value);
+            //builder = builder.header(&key, &value);
         }
         
         Ok(builder.body(Body::from(body)).unwrap())

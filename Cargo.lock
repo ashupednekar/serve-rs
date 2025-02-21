@@ -827,7 +827,6 @@ version = "0.23.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "57fe09249128b3173d092de9523eaa75136bf7ba85e0d69eca241c7939c933cc"
 dependencies = [
- "anyhow",
  "cfg-if",
  "indoc",
  "libc",
@@ -1034,7 +1033,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "servers"
+name = "serve-rs"
 version = "0.1.0"
 dependencies = [
  "hyper 0.14.32",

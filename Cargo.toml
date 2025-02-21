@@ -1,10 +1,10 @@
 [package]
-name = "corn"
+name = "servers"
 version = "6.1.5"
 edition = "2021"
 
 [lib]
-name = "corn"
+name = "servers"
 crate-type = ["cdylib", "lib"]
 
 [dependencies]

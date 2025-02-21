@@ -20,7 +20,7 @@ fn start(py: Python) -> PyResult<()> {
 }
 
 #[pymodule]
-fn corn(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn servers(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(start, m)?)?;
     Ok(())
 }

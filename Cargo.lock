@@ -176,22 +176,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
-name = "corn"
-version = "6.1.5"
-dependencies = [
- "hyper 0.14.32",
- "opentelemetry",
- "opentelemetry-otlp",
- "opentelemetry_sdk",
- "pyo3",
- "tokio",
- "tracing",
- "tracing-opentelemetry",
- "tracing-subscriber",
- "tracing-test",
-]
-
-[[package]]
 name = "either"
 version = "1.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1047,6 +1031,22 @@ dependencies = [
  "memchr",
  "ryu",
  "serde",
+]
+
+[[package]]
+name = "servers"
+version = "6.1.5"
+dependencies = [
+ "hyper 0.14.32",
+ "opentelemetry",
+ "opentelemetry-otlp",
+ "opentelemetry_sdk",
+ "pyo3",
+ "tokio",
+ "tracing",
+ "tracing-opentelemetry",
+ "tracing-subscriber",
+ "tracing-test",
 ]
 
 [[package]]

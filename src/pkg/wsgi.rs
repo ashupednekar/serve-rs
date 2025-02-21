@@ -3,7 +3,7 @@ use std::{collections::HashMap, sync::Arc};
 use hyper::{
    Body, Request, Response 
 };
-use pyo3::{prelude::*, types::{IntoPyDict, PyBytes, PyDict}};
+use pyo3::{prelude::*, types::{PyBytes, PyDict}};
 
 #[pyfunction]
 fn start_response(){}
@@ -23,23 +23,29 @@ impl WSGIApp {
     pub async fn handle_request(&self, req: Request<Body>) -> PyResult<Response<Body>> {
         tracing::info!("req: {:?}", &req);
 
-        /*let headers: Vec<_> = req.headers()
-            .iter()
-            .map(|(k, v)| (k.as_str(), v.to_str().unwrap_or("")))
-            .collect();*/
         let path = req.uri().to_string();
+        let headers: HashMap<String, String> = req.headers()
+            .iter()
+            .map(|(k, v)| {
+                let key = format!("HTTP_{}", k.as_str().replace("-", "_").to_uppercase());
+                let value = v.to_str().unwrap_or("").to_string();
+                (key, value)
+            })
+            .collect();
         let body_bytes = hyper::body::to_bytes(req.into_body())
             .await
             .map_err(|e| PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(format!("{}", e)))?
             .to_vec();
 
+
         let app = self.app.clone();
-    
 
         let (status, response_headers, body) = tokio::task::spawn_blocking(move || {
             Python::with_gil(|py| -> PyResult<(String, Vec<(String, String)>, Vec<u8>)> {
                 let environ = PyDict::new(py);
-
+                for (k, v) in headers.into_iter(){
+                    environ.set_item(k.as_str().replace("-", "_").to_uppercase(), v.to_string())?;
+                }
                 environ.set_item("SERVER_NAME", "")?;
                 environ.set_item("SERVER_PORT", "")?;
                 environ.set_item("HTTP_HOST", "localhost")?;

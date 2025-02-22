@@ -31,3 +31,5 @@ cURL away
 ashu@ashu:~ $ curl http://localhost:8000/screenmgmt/screen/
 {"errors":[{"code":"ER-0014","detail":"Project is not selected. Please select the project to continue.","attr":null}]}
 ```
+
+

@@ -17,7 +17,7 @@ wsgi.py
 (base) ashutoshpednekar@192 svc %
 ```
 
-Run the server
+Run your servers, pun intended 
 
 ```bash
 (base) ashutoshpednekar@192 svc % serve-rs main.wsgi:application
@@ -25,3 +25,9 @@ Run the server
 WSGI Server running at http://127.0.0.1:8000
 ```
 
+cURL away
+
+```
+ashu@ashu:~ $ curl http://localhost:8000/screenmgmt/screen/
+{"errors":[{"code":"ER-0014","detail":"Project is not selected. Please select the project to continue.","attr":null}]}
+```

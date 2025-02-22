@@ -15,7 +15,7 @@ pub async fn serve(path: &str, port: u16) -> PyResult<()>{
     };
     
     let app = Arc::new(Python::with_gil(|py|{
-        WSGIApp::new(py, wsgi_module, wsgi_app)
+        WSGIApp::new(py, wsgi_module, wsgi_app, port)
     })?);
     
     let addr = SocketAddr::from(([127, 0, 0, 1], port));

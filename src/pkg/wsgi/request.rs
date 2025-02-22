@@ -15,6 +15,7 @@ impl WSGIApp{
         tracing::info!("req: {:?}", &req);
 
         let path = req.uri().to_string();
+        let method = req.method().to_string().to_uppercase();
         let headers: HashMap<String, String> = req.headers()
             .iter()
             .map(|(k, v)| {
@@ -30,6 +31,7 @@ impl WSGIApp{
 
 
         let app = self.app.clone();
+        let port = self.port.clone();
 
         let (status, response_headers, body) = tokio::task::spawn_blocking(move || {
             Python::with_gil(|py| -> PyResult<(u16, Vec<(String, String)>, Vec<u8>)> {
@@ -38,10 +40,10 @@ impl WSGIApp{
                     environ.set_item(k.as_str().replace("-", "_").to_uppercase(), v.to_string())?;
                 }
                 environ.set_item("SERVER_NAME", "")?;
-                environ.set_item("SERVER_PORT", "")?;
+                environ.set_item("SERVER_PORT", port)?;
                 environ.set_item("HTTP_HOST", "localhost")?;
                 environ.set_item("PATH_INFO", path)?;
-                environ.set_item("REQUEST_METHOD", "GET")?;
+                environ.set_item("REQUEST_METHOD", method)?;
 
                 let py_body = PyBytes::new(py, &body_bytes);
 

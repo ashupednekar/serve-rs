@@ -248,24 +248,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-your-wsgi-app" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running Your WSGI App
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       How It Works
@@ -399,24 +381,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Installation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-your-wsgi-app" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running Your WSGI App
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       How It Works
@@ -488,16 +452,6 @@ deploying a WSGI app often felt like a side quest. <strong>serve-rs</strong> cha
 <p>✅ <strong>Simple</strong> – No more tweaking worker models for the nth time<br />
 ✅ <strong>Effortless</strong> – Works out of the box with Django, Flask, and friends  </p>
 <p>And yes, <strong>ASGI support is on the roadmap</strong>—because it’s 2025, and WSGI alone isn’t cutting it anymore.  </p>
-<h2 id="installation">Installation</h2>
-<p>aaabash<br />
-pip install serve-rs<br />
-aaa  </p>
-<h2 id="running-your-wsgi-app">Running Your WSGI App</h2>
-<p>If your app has a WSGI entry point (like Django’s <code>wsgi.py</code>), you’re all set.  </p>
-<p>aaabash<br />
-serve-rs main.wsgi:application<br />
-aaa  </p>
-<p>That’s it. No worker models. No arcane flags. Just <strong>run your server(s)</strong> (pun intended).  </p>
 <h2 id="how-it-works">How It Works</h2>
 <ul>
 <li><strong>Rust-powered core</strong> – serve-rs uses <strong>Hyper</strong> for high-performance HTTP handling and <strong>Tokio</strong> for async scheduling.  </li>
@@ -505,7 +459,7 @@ aaa  </p>
 <li><strong>Planned ASGI support</strong> – Future versions will support ASGI frameworks like FastAPI and Starlette.  </li>
 </ul>
 <h3 id="want-to-know-more">Want to know more?</h3>
-<p>Check out <a href="https://example.com/serve-rs-blog">the blog</a> for deep dives, benchmarks, and future plans.  </p>
+<p>Check out <a href="https://example.com/serve-rs-blog">the blog</a> for deep dives, benchmarks, and future plans. (coming soon) </p>
 <h2 id="why-youll-never-look-at-gunicorn-again">Why You’ll Never Look at Gunicorn Again</h2>
 <ul>
 <li><strong>No more endless worker models</strong> – You don’t have to Google <em>"Gunicorn workers explained like I'm five"</em>.  </li>

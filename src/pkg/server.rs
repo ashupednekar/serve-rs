@@ -7,7 +7,7 @@ use std::{convert::Infallible, net::SocketAddr, sync::Arc};
 
 use crate::pkg::wsgi::WSGIApp;
 
-pub async fn serve(path: &str) -> PyResult<()>{
+pub async fn serve(path: &str, port: u16) -> PyResult<()>{
     let (wsgi_module, wsgi_app) = if let Some((module, app)) = path.split_once(':') {
         (module, app)    
     } else {
@@ -18,7 +18,7 @@ pub async fn serve(path: &str) -> PyResult<()>{
         WSGIApp::new(py, wsgi_module, wsgi_app)
     })?);
     
-    let addr = SocketAddr::from(([127, 0, 0, 1], 8000));
+    let addr = SocketAddr::from(([127, 0, 0, 1], port));
     let make_svc = make_service_fn(move |_| {
         let app = app.clone();
         async { 

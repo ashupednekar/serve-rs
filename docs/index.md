@@ -7,7 +7,6 @@ deploying a WSGI app often felt like a side quest. **serve-rs** changes that.
 
 Built on **Tokio** and **Hyper**, serve-rs is a modern, Rust-powered WSGI server that’s:  
 
-✅ **Fast** – Async-first and optimized for real-world workloads  
 ✅ **Simple** – No more tweaking worker models for the nth time  
 ✅ **Effortless** – Works out of the box with Django, Flask, and friends  
 

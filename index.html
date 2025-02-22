@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#serve-rs-a-gunicorn-replacement-that-doesnt-make-you-cry" class="md-skip">
+        <a href="#serve-rs-a-gunicorn-replacement-that-wont-make-you-cry" class="md-skip">
           Skip to content
         </a>
       
@@ -239,6 +239,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#what-is-serve-rs" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is serve-rs?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-your-wsgi-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Your WSGI App
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How It Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#want-to-know-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      Want to know more?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#why-youll-never-look-at-gunicorn-again" class="md-nav__link">
     <span class="md-ellipsis">
       Why You’ll Never Look at Gunicorn Again
@@ -339,6 +390,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#what-is-serve-rs" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is serve-rs?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-your-wsgi-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Your WSGI App
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How It Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#want-to-know-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      Want to know more?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#why-youll-never-look-at-gunicorn-again" class="md-nav__link">
     <span class="md-ellipsis">
       Why You’ll Never Look at Gunicorn Again
@@ -378,14 +480,40 @@
 
 
 
-<h1 id="serve-rs-a-gunicorn-replacement-that-doesnt-make-you-cry">serve-rs: A Gunicorn Replacement That Doesn’t Make You Cry</h1>
+<h1 id="serve-rs-a-gunicorn-replacement-that-wont-make-you-cry">serve-rs: A Gunicorn Replacement That won't make you cry</h1>
+<h2 id="what-is-serve-rs">What is serve-rs?</h2>
+<p>Gunicorn served us well—until it didn’t. Between its <em>million</em> worker models, process juggling, and config gymnastics,<br />
+deploying a WSGI app often felt like a side quest. <strong>serve-rs</strong> changes that.  </p>
+<p>Built on <strong>Tokio</strong> and <strong>Hyper</strong>, serve-rs is a modern, Rust-powered WSGI server that’s:  </p>
+<p>✅ <strong>Fast</strong> – Async-first and optimized for real-world workloads<br />
+✅ <strong>Simple</strong> – No more tweaking worker models for the nth time<br />
+✅ <strong>Effortless</strong> – Works out of the box with Django, Flask, and friends  </p>
+<p>And yes, <strong>ASGI support is on the roadmap</strong>—because it’s 2025, and WSGI alone isn’t cutting it anymore.  </p>
+<h2 id="installation">Installation</h2>
+<p>aaabash<br />
+pip install serve-rs<br />
+aaa  </p>
+<h2 id="running-your-wsgi-app">Running Your WSGI App</h2>
+<p>If your app has a WSGI entry point (like Django’s <code>wsgi.py</code>), you’re all set.  </p>
+<p>aaabash<br />
+serve-rs main.wsgi:application<br />
+aaa  </p>
+<p>That’s it. No worker models. No arcane flags. Just <strong>run your server(s)</strong> (pun intended).  </p>
+<h2 id="how-it-works">How It Works</h2>
+<ul>
+<li><strong>Rust-powered core</strong> – serve-rs uses <strong>Hyper</strong> for high-performance HTTP handling and <strong>Tokio</strong> for async scheduling.  </li>
+<li><strong>WSGI-compatible</strong> – Hooks into WSGI entry points, so existing apps work with zero changes.  </li>
+<li><strong>Planned ASGI support</strong> – Future versions will support ASGI frameworks like FastAPI and Starlette.  </li>
+</ul>
+<h3 id="want-to-know-more">Want to know more?</h3>
+<p>Check out <a href="https://example.com/serve-rs-blog">the blog</a> for deep dives, benchmarks, and future plans.  </p>
 <h2 id="why-youll-never-look-at-gunicorn-again">Why You’ll Never Look at Gunicorn Again</h2>
 <ul>
 <li><strong>No more endless worker models</strong> – You don’t have to Google <em>"Gunicorn workers explained like I'm five"</em>.  </li>
 <li><strong>Processes? In 2025?</strong> – In the age of <strong>containers and serverless</strong>, why are you still micromanaging worker PIDs?  </li>
 <li><strong>Rust-powered speed</strong> – Because Python’s GIL has slowed you down enough already.  </li>
 <li><strong>Dead simple deployment</strong> – You don’t need an entire config file just to start your server.  </li>
-<li><strong>Works with Django</strong> – Because you already have enough problems dealing with its ORM.  </li>
+<li><strong>Works with Django</strong> – Because you already have enough problems dealing with it.  </li>
 </ul>
 <h3 id="tldr-run-serve-rs-and-get-back-to-building-your-app">TL;DR: Run <code>serve-rs</code> and get back to building your app.</h3>
 

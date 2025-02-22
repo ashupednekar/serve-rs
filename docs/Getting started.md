@@ -1,7 +1,7 @@
 
 ## Running Your WSGI App (Without the Hassle)  
 
-So you have a WSGI web app—maybe Django, maybe Flask.  
+So you have a WSGI web app—maybe FastAPi, maybe Flask.  
 Navigate to your project directory and check for a WSGI entry point.  
 
 ```bash  

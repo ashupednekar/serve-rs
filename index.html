@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#serve-rs-finally-a-gunicorn-replacement-that-doesnt-make-you-cry" class="md-skip">
+        <a href="#serve-rs-a-gunicorn-replacement-that-doesnt-make-you-cry" class="md-skip">
           Skip to content
         </a>
       
@@ -248,24 +248,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-your-wsgi-app-without-losing-your-sanity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running Your WSGI App (Without Losing Your Sanity)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#test-it-like-you-mean-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test It Like You Mean It
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#why-youll-never-look-at-gunicorn-again" class="md-nav__link">
     <span class="md-ellipsis">
       Why You’ll Never Look at Gunicorn Again
@@ -276,9 +258,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#tldr-run-serve-rs-and-move-on-with-your-life" class="md-nav__link">
+  <a href="#tldr-run-serve-rs-and-get-back-to-building-your-app" class="md-nav__link">
     <span class="md-ellipsis">
-      TL;DR: Run serve-rs and move on with your life.
+      TL;DR: Run serve-rs and get back to building your app.
     </span>
   </a>
   
@@ -375,24 +357,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-your-wsgi-app-without-losing-your-sanity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running Your WSGI App (Without Losing Your Sanity)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#test-it-like-you-mean-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      Test It Like You Mean It
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#why-youll-never-look-at-gunicorn-again" class="md-nav__link">
     <span class="md-ellipsis">
       Why You’ll Never Look at Gunicorn Again
@@ -403,9 +367,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#tldr-run-serve-rs-and-move-on-with-your-life" class="md-nav__link">
+  <a href="#tldr-run-serve-rs-and-get-back-to-building-your-app" class="md-nav__link">
     <span class="md-ellipsis">
-      TL;DR: Run serve-rs and move on with your life.
+      TL;DR: Run serve-rs and get back to building your app.
     </span>
   </a>
   
@@ -432,40 +396,20 @@
 
 
 
-<h1 id="serve-rs-finally-a-gunicorn-replacement-that-doesnt-make-you-cry">serve-rs: Finally, A Gunicorn Replacement That Doesn’t Make You Cry</h1>
+<h1 id="serve-rs-a-gunicorn-replacement-that-doesnt-make-you-cry">serve-rs: A Gunicorn Replacement That Doesn’t Make You Cry</h1>
 <h2 id="installation">Installation</h2>
 <p>Why wrestle with Gunicorn’s infinite config options when you can just <strong>install serve-rs</strong> and move on with your life?  </p>
 <pre><code class="language-bash">pip install serve-rs  
 </code></pre>
-<h2 id="running-your-wsgi-app-without-losing-your-sanity">Running Your WSGI App (Without Losing Your Sanity)</h2>
-<p>So you have a WSGI web app. Maybe Django, maybe Flask, maybe something cursed.<br />
-Navigate to your project directory and check for a WSGI entry point.  </p>
-<pre><code class="language-bash">(base) ashutoshpednekar@192 svc % ls | grep mana  
-manage.py  
-(base) ashutoshpednekar@192 svc % ls main/ | grep wsg  
-wsgi.py  
-</code></pre>
-<p>Now, unlike Gunicorn, where you have to decide between <strong>sync, async, gevent, eventlet, tornado, uvicorn workers</strong><br />
-(seriously, why are there so many worker models?), <strong>serve-rs</strong> just <em>works</em>:  </p>
-<pre><code class="language-bash">(base) ashutoshpednekar@192 svc % serve-rs main.wsgi:application  
-[2025-02-22T06:16:50Z INFO  pubsub::common::nats::conn] stream updated successfully  
-WSGI Server running at http://127.0.0.1:8000  
-</code></pre>
-<p>No <code>--workers</code>, no <code>--preload</code>, no <code>"what even is a worker threadpool in 2025?"</code>—just <strong>run your server(s)</strong>.<br />
-(Yes, that pun was intentional.)  </p>
-<h2 id="test-it-like-you-mean-it">Test It Like You Mean It</h2>
-<p>Use <code>curl</code>, because real devs test APIs from the terminal:  </p>
-<pre><code class="language-bash">ashu@ashu:~ $ curl http://localhost:8000/screenmgmt/screen/  
-{&quot;errors&quot;:[{&quot;code&quot;:&quot;ER-0014&quot;,&quot;detail&quot;:&quot;Project is not selected. Please select the project to continue.&quot;,&quot;attr&quot;:null}]}  
-</code></pre>
 <h2 id="why-youll-never-look-at-gunicorn-again">Why You’ll Never Look at Gunicorn Again</h2>
 <ul>
-<li><strong>No more million worker models</strong> – You don’t have to Google <em>"Gunicorn workers explained like I'm five"</em>.  </li>
+<li><strong>No more endless worker models</strong> – You don’t have to Google <em>"Gunicorn workers explained like I'm five"</em>.  </li>
 <li><strong>Processes? In 2025?</strong> – In the age of <strong>containers and serverless</strong>, why are you still micromanaging worker PIDs?  </li>
-<li><strong>Rust-powered speed</strong> – Because Python’s GIL has ruined enough of your life already.  </li>
+<li><strong>Rust-powered speed</strong> – Because Python’s GIL has slowed you down enough already.  </li>
 <li><strong>Dead simple deployment</strong> – You don’t need an entire config file just to start your server.  </li>
+<li><strong>Works with Django</strong> – Because you already have enough problems dealing with its ORM.  </li>
 </ul>
-<h3 id="tldr-run-serve-rs-and-move-on-with-your-life">TL;DR: Run <code>serve-rs</code> and move on with your life.</h3>
+<h3 id="tldr-run-serve-rs-and-get-back-to-building-your-app">TL;DR: Run <code>serve-rs</code> and get back to building your app.</h3>
 
 
 

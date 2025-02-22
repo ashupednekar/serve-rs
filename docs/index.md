@@ -12,22 +12,6 @@ Built on **Tokio** and **Hyper**, serve-rs is a modern, Rust-powered WSGI server
 
 And yes, **ASGI support is on the roadmap**—because it’s 2025, and WSGI alone isn’t cutting it anymore.  
 
-## Installation  
-
-aaabash  
-pip install serve-rs  
-aaa  
-
-## Running Your WSGI App  
-
-If your app has a WSGI entry point (like Django’s `wsgi.py`), you’re all set.  
-
-aaabash  
-serve-rs main.wsgi:application  
-aaa  
-
-That’s it. No worker models. No arcane flags. Just **run your server(s)** (pun intended).  
-
 ## How It Works  
 
 - **Rust-powered core** – serve-rs uses **Hyper** for high-performance HTTP handling and **Tokio** for async scheduling.  
@@ -36,7 +20,7 @@ That’s it. No worker models. No arcane flags. Just **run your server(s)** (pun
 
 ### Want to know more?  
 
-Check out [the blog](https://example.com/serve-rs-blog) for deep dives, benchmarks, and future plans.  
+Check out [the blog](https://example.com/serve-rs-blog) for deep dives, benchmarks, and future plans. (coming soon) 
 
 ## Why You’ll Never Look at Gunicorn Again  
 

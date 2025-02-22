@@ -7,7 +7,6 @@ use tokio::runtime::Runtime;
 
 #[pyfunction]
 fn start(py: Python, path: &str) -> PyResult<()> {
-    tracing_subscriber::fmt::init();
     py.allow_threads(||{
         tokio::task::block_in_place(move || {
             let rt = Runtime::new().expect("failed");
@@ -21,6 +20,7 @@ fn start(py: Python, path: &str) -> PyResult<()> {
 
 #[pymodule]
 fn servers(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    tracing_subscriber::fmt::init();
     m.add_function(wrap_pyfunction!(start, m)?)?;
     Ok(())
 }

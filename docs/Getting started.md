@@ -23,9 +23,7 @@ WSGI Server running at http://127.0.0.1:8000
 No `--workers`, no `--preload`, no `"which worker model should I use?"`—just **run your server(s)**.  
 (Yes, that pun was intentional.)  
 
-## Test It Like You Mean It  
-
-Use `curl`, because real devs test APIs from the terminal:  
+## cURL away 
 
 ```bash  
 ashu@ashu:~ $ curl http://localhost:8000/screenmgmt/screen/  

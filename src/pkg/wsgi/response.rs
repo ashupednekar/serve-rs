@@ -24,12 +24,4 @@ impl WsgiResponse {
         *status_lock = Some(status);
         *headers_lock = headers;
     }
-
-    /*fn get_status(&self) -> Option<String> {
-        self.status.lock().unwrap().clone()
-    }
-
-    fn get_headers(&self) -> Vec<(String, String)> {
-        self.headers.lock().unwrap().clone()
-    }*/
 }

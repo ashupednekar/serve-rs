@@ -75,9 +75,6 @@ impl WSGIApp{
                 let response_bytes: Vec<u8> = res
                     .getattr(py, "content")?
                     .extract::<Vec<u8>>(py)?;
-                //let status_str: String = status_code.extract(py)?;
-                //let response_headers: Vec<(String, String)> = headers.extract(py)?;
-                    //.parse::<u16>()?; 
                 Ok((status_code, vec![], response_bytes))   
             })
         }).await.map_err(|e| PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(e.to_string()))??;

@@ -84,8 +84,6 @@ impl WSGIApp{
                     .and_then(|s| s.parse::<u16>().ok())
                     .unwrap_or_default();
                 tracing::info!("status code: {}", &status_code);
-
-                tracing::info!("res: {:?}", &res);
                 let response_bytes: Vec<u8> = res
                     .getattr(py, "content")?
                     .extract::<Vec<u8>>(py)?;

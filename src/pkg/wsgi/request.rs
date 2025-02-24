@@ -58,7 +58,21 @@ impl WSGIApp{
 
                 let wsgi_response = Py::new(py, WsgiResponse::new())?;
                 let start_response = wsgi_response.getattr(py, "start_response")?;
-                let res = app.call1(py, (environ, start_response, ))?;
+                let res = match app.call1(py, (environ, start_response,)) {
+                    Ok(res) => {
+                        tracing::info!("called Python WSGI function");
+                        res
+                    }
+                    Err(err) => {
+                        if let Some(tb) = err.traceback(py) {
+                            tracing::error!("Python error: {}", err);
+                            tracing::error!("Traceback:\n{}", tb.format()?);
+                        } else {
+                            tracing::error!("Python error (no traceback): {}", err);
+                        }
+                        return Err(err.into());
+                    }
+                };
                 tracing::info!("called Python WSGI function");
 
                 let status_code = wsgi_response

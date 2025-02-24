@@ -45,12 +45,10 @@ impl WSGIApp{
                 environ.set_item("PATH_INFO", path)?;
                 environ.set_item("REQUEST_METHOD", method)?;
 
-                let py_body = PyBytes::new(py, &body_bytes);
-
+                environ.set_item("CONTENT_LENGTH", &body_bytes.len().to_string())?;
                 let io = py.import("io")?;
-                let wsgi_input = io.getattr("BytesIO")?.call1((py_body,))?;
+                let wsgi_input = io.getattr("BytesIO")?.call1((body_bytes,))?;
                 environ.set_item("wsgi.input", wsgi_input)?;
-
                 environ.set_item("wsgi.version", (1, 0))?;
                 environ.set_item("wsgi.errors", py.None())?;
 
@@ -60,7 +58,6 @@ impl WSGIApp{
                 let start_response = wsgi_response.getattr(py, "start_response")?;
                 let res = match app.call1(py, (environ, start_response,)) {
                     Ok(res) => {
-                        tracing::info!("called Python WSGI function");
                         res
                     }
                     Err(err) => {

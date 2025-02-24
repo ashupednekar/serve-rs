@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use hyper::{
    Body, Request, Response 
 };
-use pyo3::{prelude::*, types::{PyBytes, PyDict}};
+use pyo3::{prelude::*, types::PyDict};
 
 use crate::pkg::wsgi::response::WsgiResponse;
 
@@ -81,18 +81,22 @@ impl WSGIApp{
                     .and_then(|s| s.parse::<u16>().ok())
                     .unwrap_or_default();
                 tracing::info!("status code: {}", &status_code);
+
+                let response_headers = wsgi_response
+                    .getattr(py, "get_headers")?
+                    .call0(py)?
+                    .extract::<Vec<(String, String)>>(py)?;
+
                 let response_bytes: Vec<u8> = res
                     .getattr(py, "content")?
                     .extract::<Vec<u8>>(py)?;
-                Ok((status_code, vec![], response_bytes))   
+                Ok((status_code, response_headers, response_bytes))   
             })
         }).await.map_err(|e| PyErr::new::<pyo3::exceptions::PyRuntimeError, _>(e.to_string()))??;
 
-        tracing::info!("{:?}| {:?} | {:?}", status, response_headers, body);
-        
         let mut builder = Response::builder().status(status);
         for (key, value) in response_headers {
-            //builder = builder.header(&key, &value);
+            builder = builder.header(&key, &value);
         }
         
         Ok(builder.body(Body::from(body)).unwrap())
